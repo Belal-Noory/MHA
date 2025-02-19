@@ -33,11 +33,25 @@ class Admin{
         return $data;
     }
 
+    public function DeleteUser($id)
+    {
+        $query = "DELETE FROM users WHERE Id = ?";
+        $result = $this->conn->Query($query,[$id]);
+        return $result->rowCount();
+    }
+
     public function addCompanyDetails($params)
     {
         $query = "INSERT INTO companyDetails(background) VALUES (?)";
         $result = $this->conn->Query($query, $params, true);
         return $result;
+    }
+
+    public function UpdateCompanyDetails($params)
+    {
+        $query = "UPDATE companyDetails SET background = ? WHERE Id = ?";
+        $result = $this->conn->Query($query, $params);
+        return $result->rowCount();
     }
 
     public function getCompanyDetails()
@@ -68,6 +82,13 @@ class Admin{
         $query = "INSERT INTO companyAddresses (Street, City, State, PostalCode, Country) VALUES (?, ?, ?, ?, ?)";
         $result = $this->conn->Query($query, $params, true);
         return $result;
+    }
+
+    public function UpdateCompanyAddress($params)
+    {
+        $query = "UPDATE companyAddresses SET Street = ?, City = ?, State = ?, PostalCode = ?, Country = ? WHERE Id = ?";
+        $result = $this->conn->Query($query, $params);
+        return $result->rowCount();
     }
 
     public function getCompanyAddresses()

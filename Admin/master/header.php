@@ -1,4 +1,12 @@
 <?php
+session_start();
+if(!isset($_SESSION["adminLogged"]))
+{
+    header("Location: index.php?login=false");
+    exit();
+}
+include("../init.php");
+
 $nav_items = [
     "Dashboard" => ["icon" => "fas fa-fw fa-tachometer-alt", "link" => "dashboard.php"],
     "Users" => ["icon" => "fas fa-fw fa-users", "link" => "users.php"],
@@ -28,7 +36,7 @@ $nav_items = [
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+    <link href="https://cdn.datatables.net/v/bs4/jszip-3.10.1/dt-2.2.2/af-2.7.0/b-3.2.2/b-colvis-3.2.2/b-html5-3.2.2/b-print-3.2.2/cr-2.0.4/date-1.5.5/fc-5.0.4/fh-4.0.1/kt-2.12.1/r-3.0.4/rg-1.5.1/rr-1.5.0/sc-2.4.3/sb-1.8.2/sp-2.3.3/sl-3.0.0/sr-1.4.1/datatables.min.css" rel="stylesheet" integrity="sha384-tcpLS082NsWkf2sk3Y7oI4z+FwOy/tzttutCBnU15RoNYFbkrZo7BCt9U/ENMiUM" crossorigin="anonymous">
 </head>
 
 <body id="page-top">

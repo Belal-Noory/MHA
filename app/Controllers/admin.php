@@ -8,11 +8,15 @@ $admin = new Admin();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Add company details
-    if (isset($_POST["adddetails"])) {
+    if (isset($_POST["updateBackground"])) {
+        $Id = helper::test_input($_POST["Id"]);
         $background = helper::test_input($_POST["background"]);
-        // Call add function
-        $res = $admin->addCompanyDetails([$background]);
-        echo $res;
+        if($Id > 0){
+            $admin->UpdateCompanyDetails([$background,$Id]);
+        }else{
+            $admin->addCompanyDetails([$background]);
+        }
+        header("Location: ../../Admin/dashboard.php");
     }
 
     // Add company contact
@@ -26,14 +30,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Add company address
     if (isset($_POST["addaddress"])) {
-        $street = helper::test_input($_POST["street"]);
-        $city = helper::test_input($_POST["city"]);
-        $state = helper::test_input($_POST["state"]);
-        $postalCode = helper::test_input($_POST["postalCode"]);
-        $country = helper::test_input($_POST["country"]);
-        // Call add function
-        $res = $admin->addCompanyAddress([$street, $city, $state, $postalCode, $country]);
-        echo $res;
+        $Id = helper::test_input($_POST["Id"]);
+        $street = helper::test_input($_POST["Street"]);
+        $city = helper::test_input($_POST["City"]);
+        $state = helper::test_input($_POST["State"]);
+        $postalCode = helper::test_input($_POST["PostalCode"]);
+        $country = helper::test_input($_POST["Country"]);
+        if($Id > 0)
+        {
+            $admin->UpdateCompanyAddress([$street, $city, $state, $postalCode, $country, $Id]);
+        }else{
+            // Call add function
+            $admin->addCompanyAddress([$street, $city, $state, $postalCode, $country]);
+        }
+        header("Location: ../../Admin/dashboard.php");
     }
 
     // Add social media link
@@ -60,6 +70,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }else{
             echo json_encode(array("success"=>"false"));
         }
+    }
+
+    // Add Login
+    if (isset($_POST["adduser"])) {
+        $email = helper::test_input($_POST["email"]);
+        $password = helper::test_input($_POST["password"]);
+        // Call add function
+        $res = $admin->addUser([$email, $password]);
+        header("Location: ../../Admin/users.php");
+    }
+
+    // Delete User
+    if(isset($_POST["deleteUser"])){
+        $Id = helper::test_input($_POST["Id"]);
+        $res = $admin->DeleteUser($Id);
+        echo $res;
     }
 
     if(isset($_POST["logout"]))
