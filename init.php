@@ -19,7 +19,7 @@ if ($server == "local") {
     define('DB_HOST', 'localhost');
     define('DB_USER', 'root');
     define('DB_PASS', '');
-    define('DB_NAME', 'ashna');
+    define('DB_NAME', 'MHA');
 } else {
 
     define('DB_HOST', 'localhost');
