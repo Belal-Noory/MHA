@@ -1,7 +1,9 @@
 <?php
+    session_start();
     require("../init.php");
     if(isset($_SESSION["adminLogged"])){
-        header("dashboard.php");
+        header("Location: dashboard.php");
+        exit();
     }
 ?>
 <!DOCTYPE html>
@@ -79,8 +81,6 @@
 
     <script>
         $(document).ready(function(){
-            
-
             $("#btnlogin").on("click",function(e){
                 e.preventDefault();
                 ths = $(this);
@@ -110,14 +110,14 @@
                     type: "POST",
                     data: { email: email, password: password, getlogin: 'TRUE' },
                     dataType: "json",
+                    cache: false,
                     success: function (response) {
-                        console.log(response);
-                        if (response.status === "success") {
-                            //window.location.href = "dashboard.php"; // Redirect on success
+                        if (response.success == "true") {
+                            window.location.href = "dashboard.php"; // Redirect on success
                         } else {
                             Swal.fire({
                                 title: "Server Error",
-                                text: response.message,
+                                text: response,
                                 icon: "error"
                             });
                             $(ths).children(".spinner-border").addClass("d-none");
@@ -125,10 +125,10 @@
                             $(ths).attr("disabled", false);
                         }
                     },
-                    error: function () {
+                    error: function (e) {
                         Swal.fire({
                             title: "Error",
-                            text: "Something went wrong. Please try again.",
+                            text: e.responseText,
                             icon: "error"
                         });
                         $(ths).children(".spinner-border").addClass("d-none");

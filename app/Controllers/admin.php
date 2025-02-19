@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $profileLink = helper::test_input($_POST["profileLink"]);
         // Call add function
         $res = $admin->addSocialMediaLink([$platform, $profileLink]);
-        echo json_encode($res);
+        echo $res;
     }
 
 
@@ -52,7 +52,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = helper::test_input($_POST["password"]);
         // Call add function
         $res = $admin->getUser($email, $password);
-        echo $res;
+        if(count($res) > 0)
+        {
+            $user = $res[0];
+            $_SESSION["adminLogged"] = $user->email;
+            echo json_encode(array("success"=>"true"));
+        }else{
+            echo json_encode(array("success"=>"false"));
+        }
+    }
+
+    if(isset($_POST["logout"]))
+    {
+        session_unset(); // Unset session variables
+        session_destroy(); // Destroy session
+        echo json_encode(array("success"=>"true"));
+        exit();
     }
 }
 
