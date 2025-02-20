@@ -17,12 +17,27 @@ class Admin{
         return $result;
     }
 
+    public function updateUser($params)
+    {
+        $query = "UPDATE users SET pass = ? WHERE email = ?";
+        $result = $this->conn->Query($query, $params);
+        return $result->rowCount();
+    }
+
     public function getUser($email,$pass)
     {
         $query = "SELECT * FROM users WHERE email = ? AND pass = ?";
         $result = $this->conn->Query($query,[$email,$pass]);
         $data = $result->fetchAll(PDO::FETCH_OBJ);
         return $data;
+    }
+
+    public function getUserByEmail($email)
+    {
+        $query = "SELECT * FROM users WHERE email = ?";
+        $result = $this->conn->Query($query,[$email]);
+        $data = $result->fetchAll(PDO::FETCH_OBJ);
+        return $data[0];
     }
 
     public function getUsers()

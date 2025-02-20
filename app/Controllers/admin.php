@@ -94,6 +94,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo $res;
     }
 
+    // Update Login password
+    if (isset($_POST["updatePass"])) {
+        $newPassword = helper::test_input($_POST["newPassword"]);
+        $oldPassword = helper::test_input($_POST["oldPassword"]);
+
+        $user = $admin->getUserByEmail($_SESSION["adminLogged"]);
+        if($user->pass == $oldPassword)
+        {
+            // Call add function
+            $res = $admin->updateUser([$newPassword, $_SESSION["adminLogged"]]);
+            if($res > 0)
+            {
+                echo json_encode(array("success"=>"true"));
+            }else{
+                echo json_encode(array("success"=>"false"));
+            }
+        }else{
+            echo json_encode(array("success"=>"Old password is incorrect!"));
+        }
+        
+    }
 
     // Get Login
     if (isset($_POST["getlogin"])) {
