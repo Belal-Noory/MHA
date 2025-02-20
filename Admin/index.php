@@ -117,7 +117,7 @@
                         } else {
                             Swal.fire({
                                 title: "Server Error",
-                                text: response,
+                                text: 'Wronge email or password',
                                 icon: "error"
                             });
                             $(ths).children(".spinner-border").addClass("d-none");

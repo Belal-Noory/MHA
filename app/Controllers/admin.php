@@ -77,9 +77,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["addPost"])) {
         $title = helper::test_input($_POST["title"]);
         $description = helper::test_input($_POST["description"]);
+        $catagory = helper::test_input($_POST["catagory"]);
         $images = $_FILES['images'];
 
-        $res = $postManager->addPost([$title, $description], $images);
+        $res = $postManager->addPost([$title, $description, $catagory], $images);
         if ($res) {
             header("Location: ../../Admin/post.php?success=PostAdded");
         } else {

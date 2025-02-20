@@ -3,7 +3,7 @@
     require("master/header.php");
 
     $post = new PostManager();
-    $posts = $post->getPost();
+    $posts = $post->getPosts();
 ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -54,6 +54,10 @@
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <textarea name="description" id="description" placeholder="Description..." class="form-control"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="catagory" class="form-label">Catagory</label>
+                    <input type="text" name="catagory" id="catagory" placeholder="Catagory..." class="form-control" />
                 </div>
                 <div class="mb-3">
                     <label for="images" class="form-label">Images</label>

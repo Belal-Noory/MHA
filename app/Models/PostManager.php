@@ -9,7 +9,7 @@ class PostManager {
 
     public function addPost($params, $images)
     {
-        $query = "INSERT INTO Posts (Title, Description) VALUES (?, ?)";
+        $query = "INSERT INTO Posts (Title, Description,catagory) VALUES (?, ?, ?)";
         $result = $this->conn->Query($query, $params, true);
         
         if ($result) {
@@ -21,9 +21,17 @@ class PostManager {
         return false;
     }
 
-    public function getPost()
+    public function getPosts()
     {
         $query = "SELECT * FROM Posts";
+        $result = $this->conn->Query($query);
+        $data = $result->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    }
+
+    public function getPostCatagory()
+    {
+        $query = "SELECT DISTINCT catagory FROM Posts";
         $result = $this->conn->Query($query);
         $data = $result->fetchAll(PDO::FETCH_OBJ);
         return $data;
@@ -41,6 +49,14 @@ class PostManager {
                 $this->conn->Query($query, [$postId, $fileName]);
             }
         }
+    }
+
+    public function getPostImage($postId)
+    {
+        $query = "SELECT * FROM PostImages WHERE PostId = ?";
+        $result = $this->conn->Query($query,[$postId]);
+        $data = $result->fetch(PDO::FETCH_OBJ);
+        return $data;
     }
 
     public function deletePost($Id)
