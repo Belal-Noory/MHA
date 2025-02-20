@@ -3,7 +3,7 @@ session_start();
 require "../../init.php";
 
 $admin = new Admin();
-
+$postManager = new PostManager();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -25,6 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $type = helper::test_input($_POST["type"]);
         // Call add function
         $res = $admin->addCompanyContact([$contact, $type]);
+        header("Location: ../../Admin/contacts.php");
+    }
+
+    // Delete company contact
+    if (isset($_POST["deleteContact"])) {
+        $Id = helper::test_input($_POST["Id"]);
+
+        // Call add function
+        $res = $admin->DeleteCompanyContact($Id);
         echo $res;
     }
 
@@ -47,11 +56,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Add social media link
-    if (isset($_POST["addsocial"])) {
+    if (isset($_POST["addSocial"])) {
         $platform = helper::test_input($_POST["platform"]);
         $profileLink = helper::test_input($_POST["profileLink"]);
         // Call add function
         $res = $admin->addSocialMediaLink([$platform, $profileLink]);
+        header("Location: ../../Admin/social.php");
+    }
+
+    // Delete social media link
+    if (isset($_POST["deleteSocial"])) {
+        $Id = helper::test_input($_POST["Id"]);
+        // Call add function
+        $res = $admin->deleteSocialMediaLink($Id);
+        echo $res;
+    }
+
+
+    // Add Post
+    if (isset($_POST["addPost"])) {
+        $title = helper::test_input($_POST["title"]);
+        $description = helper::test_input($_POST["description"]);
+        $images = $_FILES['images'];
+
+        $res = $postManager->addPost([$title, $description], $images);
+        if ($res) {
+            header("Location: ../../Admin/post.php?success=PostAdded");
+        } else {
+            header("Location: ../../Admin/post.php?error=FailedToAddPost");
+        }
+    }
+
+    // Delete Post
+    if (isset($_POST["deletePost"])) {
+        $Id = helper::test_input($_POST["Id"]);
+        $res = $postManager->deletePost($Id);
         echo $res;
     }
 

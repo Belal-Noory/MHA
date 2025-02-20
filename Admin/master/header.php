@@ -11,7 +11,8 @@ $nav_items = [
     "Dashboard" => ["icon" => "fas fa-fw fa-tachometer-alt", "link" => "dashboard.php"],
     "Users" => ["icon" => "fas fa-fw fa-users", "link" => "users.php"],
     "Contacts" => ["icon" => "fas fa-fw fa-phone", "link" => "contacts.php"],
-    "Social Media" => ["icon" => "fas fa-fw fa-inbox", "link" => "social.php"]
+    "Social Media" => ["icon" => "fas fa-fw fa-inbox", "link" => "social.php"],
+    "Posts" => ["icon" => "fas fa-fw fa-image", "link" => "post.php"]
 ];
 ?>
 
@@ -40,17 +41,14 @@ $nav_items = [
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <img src="../assets/imgs/Logo/Transparent_Logo_mini.svg" alt="logo" width="80">
                 </div>
                 <div class="sidebar-brand-text mx-3">MHA Admin</div>
             </a>

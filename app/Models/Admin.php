@@ -69,6 +69,14 @@ class Admin{
         return $result;
     }
 
+    public function DeleteCompanyContact($Id)
+    {
+        $query = "DELETE FROM companyContact WHERE Id = ?";
+        $result = $this->conn->Query($query, [$Id]);
+        return $result->rowCount();
+    }
+
+
     public function getCompanyContacts()
     {
         $query = "SELECT * FROM companyContact";
@@ -104,6 +112,13 @@ class Admin{
         $query = "INSERT INTO SocialMediaLinks (Platform, ProfileLink) VALUES (?, ?)";
         $result = $this->conn->Query($query, $params, true);
         return $result;
+    }
+
+    public function deleteSocialMediaLink($Id)
+    {
+        $query = "DELETE FROM SocialMediaLinks WHERE Id = ?";
+        $result = $this->conn->Query($query, [$Id]);
+        return $result->rowCount();
     }
 
     public function getSocialMediaLinks()
