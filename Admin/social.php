@@ -8,7 +8,7 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Company Contacts</h1>
+    <h1 class="h3 mb-4 text-gray-800">Company Social Media Links</h1>
     <div id="btnContiner" class="mb-1"></div>
     <table class="table" id="mytable">
         <thead>
