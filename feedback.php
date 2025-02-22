@@ -125,8 +125,8 @@
                     <textarea class="form-control" id="feedback" name="feedback" rows="4" placeholder="Your feedback..."></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block mt-2">
-                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                <i class="bi bi-check"></i>
+                    <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                    <i class="bi bi-check"></i>
                     Submit Feedback
                 </button>
             </form>
@@ -207,6 +207,11 @@
 
         $("#feedbackForm").on("submit", function (e) {
             e.preventDefault();
+            ths = $(this);
+
+            $(ths).children("button").children("span").removeClass("d-none");
+            $(ths).children("button").children("i").addClass("d-none");
+            $(ths).children("button").attr("disabled", 'TRUE');
 
             const name = $("#name").val().trim();
             const email = $("#email").val().trim();
@@ -224,8 +229,15 @@
                     $("#feedbackForm")[0].reset(); // Reset form
                     $(".bi-star-fill").removeClass("active bi-star-fill");
                     $("#ratingInput").val("0"); // Reset rating input
+
+                    $(ths).children("button").children("span").addClass("d-none");
+                    $(ths).children("button").children("i").removeClass("d-none");
+                    $(ths).children("button").removeAttr("disabled");
                 } else {
                     Swal.fire("Error", res.message, "error");
+                    $(ths).children("button").children("span").addClass("d-none");
+                    $(ths).children("button").children("i").removeClass("d-none");
+                    $(ths).children("button").removeAttr("disabled");
                 }  
                         
             });
