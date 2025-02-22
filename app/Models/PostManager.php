@@ -29,6 +29,14 @@ class PostManager {
         return $data;
     }
 
+    public function getPost($Id)
+    {
+        $query = "SELECT * FROM Posts WHERE Id = ?";
+        $result = $this->conn->Query($query,[$Id]);
+        $data = $result->fetch(PDO::FETCH_OBJ);
+        return $data;
+    }
+
     public function getPostCatagory()
     {
         $query = "SELECT DISTINCT catagory FROM Posts";
@@ -56,6 +64,14 @@ class PostManager {
         $query = "SELECT * FROM PostImages WHERE PostId = ?";
         $result = $this->conn->Query($query,[$postId]);
         $data = $result->fetch(PDO::FETCH_OBJ);
+        return $data;
+    }
+
+    public function getPostImages($postId)
+    {
+        $query = "SELECT * FROM PostImages WHERE PostId = ?";
+        $result = $this->conn->Query($query,[$postId]);
+        $data = $result->fetchAll(PDO::FETCH_OBJ);
         return $data;
     }
 

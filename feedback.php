@@ -11,19 +11,7 @@
   $email = array_filter($contacts, function($record){
     return $record->type === 'email';
   });
-  $social_lins = $admin->getSocialMediaLinks();
-
-  if(isset($_GET["item"])){
-    $db_post = $post->getPost($_GET["item"]);
-    // Convert it to a DateTime object
-    $date = new DateTime($db_post->CreatedAt);
-    // Format it in a more official format
-    $formattedDate = $date->format('l, d F Y h:i A');
-    $imgs = $post->getPostImages($db_post->Id);
-  }else{
-    header("Location: index.php");
-  }
-  
+  $social_lins = $admin->getSocialMediaLinks();  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +19,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Portfolio Details - MHA</title>
+  <title>Feeback - MHA</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -53,6 +41,28 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .feedback-card {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            background: #fff;
+        }
+        .star-rating {
+            font-size: 24px;
+            cursor: pointer;
+            color: #ddd;
+        }
+        .star-rating.active {
+            color: #ffcc00;
+        }
+    </style>
 </head>
 
 <body class="portfolio-details-page">
@@ -68,7 +78,7 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="feedback.php">Feedback</a></li>
+          
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -85,73 +95,43 @@
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.php">Home</a></li>
-            <li class="current">Portfolio Details</li>
+            <li class="current">Feedback</li>
           </ol>
         </nav>
       </div>
     </div><!-- End Page Title -->
 
-    <!-- Portfolio Details Section -->
-    <section id="portfolio-details" class="portfolio-details section">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-8">
-            <div class="portfolio-details-slider swiper init-swiper">
-
-              <script type="application/json" class="swiper-config">
-                {
-                  "loop": true,
-                  "speed": 600,
-                  "autoplay": {
-                    "delay": 5000
-                  },
-                  "slidesPerView": "auto",
-                  "pagination": {
-                    "el": ".swiper-pagination",
-                    "type": "bullets",
-                    "clickable": true
-                  }
-                }
-              </script>
-
-              <div class="swiper-wrapper align-items-center">
-                <?php
-                  foreach ($imgs as $postImg) {?>
-                  
-                  <div class="swiper-slide">
-                    <img src="uploads/<?php echo $postImg->ImagePath; ?>" alt="">
-                  </div>
-
-                <?php }?>
-              </div>
-              <div class="swiper-pagination"></div>
-            </div>
-          </div>
-
-          <div class="col-lg-4">
-            <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">
-              <h3>Item information</h3>
-              <ul>
-                <li><strong>Category</strong>: <?php echo $db_post->catagory;?></li>
-                <li><strong>Created date</strong>: <?php echo $formattedDate;?></li>
-              </ul>
-            </div>
-            <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
-              <h2><?php echo $db_post->Title;?></h2>
-              <p>
-                <?php echo $db_post->Description;?>
-              </p>
-            </div>
-          </div>
-
+    <div class="container">
+        <div class="feedback-card">
+            <h4 class="text-center mb-4">Rate Our Service</h4>
+            <form id="feedbackForm">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="name" name="name" required placeholder="Your Name...">
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Address...">
+                </div>
+                <div class="mb-3">
+                    <div id="starRating">
+                        <i class="bi bi-star star-rating" data-value="1"></i>
+                        <i class="bi bi-star star-rating" data-value="2"></i>
+                        <i class="bi bi-star star-rating" data-value="3"></i>
+                        <i class="bi bi-star star-rating" data-value="4"></i>
+                        <i class="bi bi-star star-rating" data-value="5"></i>
+                    </div>
+                    <input type="hidden" id="rating" name="rating" value="0">
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" id="feedback" name="feedback" rows="4" placeholder="Your feedback..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-2">
+                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                <i class="bi bi-check"></i>
+                    Submit Feedback
+                </button>
+            </form>
         </div>
-
-      </div>
-
-    </section><!-- /Portfolio Details Section -->
+    </div>
 
   </main>
 
@@ -204,9 +184,55 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll(".star-rating");
+        const ratingInput = document.getElementById("rating");
+
+        stars.forEach(star => {
+            star.addEventListener("click", function () {
+                const rating = this.getAttribute("data-value");
+                ratingInput.value = rating;
+
+                stars.forEach(s => s.classList.remove("active", "bi-star-fill"));
+                for (let i = 0; i < rating; i++) {
+                    stars[i].classList.add("active", "bi-star-fill");
+                }
+            });
+        });
+
+        $("#feedbackForm").on("submit", function (e) {
+            e.preventDefault();
+
+            const name = $("#name").val().trim();
+            const email = $("#email").val().trim();
+            const rating = $("#rating").val();
+            const feedback = $("#feedback").val().trim();
+            if (rating == "0") {
+                Swal.fire("Error", "Please select a rating!", "error");
+                return;
+            }
+
+            $.post("app/Controllers/feedback.php",{name,email,rating,feedback,addfeedback:true},function(response) {
+                var res = JSON.parse(response);
+                if (res.status === "success") {
+                    Swal.fire("Thank You!", "Your feedback has been submitted.", "success");
+                    $("#feedbackForm")[0].reset(); // Reset form
+                    $(".bi-star-fill").removeClass("active bi-star-fill");
+                    $("#ratingInput").val("0"); // Reset rating input
+                } else {
+                    Swal.fire("Error", res.message, "error");
+                }  
+                        
+            });
+
+        });
+    });
+</script>
 
 </body>
 
