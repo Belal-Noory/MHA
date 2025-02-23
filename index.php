@@ -2,6 +2,7 @@
   include("init.php");
   $admin = new Admin();
   $post = new PostManager();
+  $feedbackManager = new FeedbackManager();
 
   $details = $admin->getCompanyDetails();
   $address = $admin->getCompanyAddresses();
@@ -16,7 +17,8 @@
   $posts = $post->getPosts();
   $postCatagory = $post->getPostCatagory();
 
-  
+  $feedbacks = $feedbackManager->getAllFeedback();
+  $feedbackData = $feedbacks->fetchAll(PDO::FETCH_OBJ);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -134,6 +136,7 @@
       </div>
     </section><!-- /Stats Section -->
 
+    <?php if($feedbacks->rowCount() > 0){?>
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials section dark-background">
 
@@ -158,23 +161,26 @@
             }
           </script>
           <div class="swiper-wrapper">
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                <h3>Saul Goodman</h3>
-                <h4>Ceo &amp; Founder</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div><!-- End testimonial item -->
-
+            <?php
+              foreach ($feedbackData as $fdata) {
+                $rate = $fdata->Rating;?>
+              
+                <div class="swiper-slide">
+                  <div class="testimonial-item">
+                    <h3><?php echo $fdata->Name; ?></h3>
+                    <?php if(!empty($fdata->Email)){ echo "<h4>$fdata->Email</h4>";} ?>
+                    <div class="stars">
+                      <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    </div>
+                    <p>
+                      <i class="bi bi-quote quote-icon-left"></i>
+                      <span><?php echo $fdata->Feedback; ?></span>
+                      <i class="bi bi-quote quote-icon-right"></i>
+                    </p>
+                  </div>
+                </div><!-- End testimonial item -->
+              
+              <?php }?>
           </div>
           <div class="swiper-pagination"></div>
         </div>
@@ -182,7 +188,7 @@
       </div>
 
     </section><!-- /Testimonials Section -->
-
+    <?php } ?>
     <!-- Portfolio Section -->
     <section id="portfolio" class="portfolio section">
       <!-- Section Title -->
