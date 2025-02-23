@@ -4,7 +4,7 @@ $contact = new Contact();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Add company details
+    // Add company email
     if (isset($_POST["sendMessage"])) {
         $name = helper::test_input($_POST["name"]);
         $email = helper::test_input($_POST["email"]);
@@ -22,6 +22,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode(["error" => "An error occured while sending message, please try again!"]);
         }
     }
+
+
+    // delete an email
+    if(isset($_POST["deleteemail"])){
+        $ID = helper::test_input($_POST["ID"]);
+        $res = $contact->Delete($ID);
+        if($res->rowCount() > 0){
+            echo json_encode(["status" => "success", "message" => "Email deleted successfully"]);
+            exit;
+        }else {
+            echo json_encode(["status" => "error", "message" => "Database error"]);
+            exit;
+        }
+    }
+
+
 }
 
 

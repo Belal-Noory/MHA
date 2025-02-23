@@ -3,6 +3,8 @@ require "../../init.php";
 $feedbackObj = new FeedbackManager();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    // Add new feedback
     if (isset($_POST["addfeedback"])) {
         $name = trim($_POST["name"] ?? '');
         $email = trim($_POST["email"] ?? '');
@@ -30,6 +32,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
     }
+
+    // delete a feedback
+    if(isset($_POST["deletefeedback"])){
+        $ID = helper::test_input($_POST["ID"]);
+        $res = $feedbackObj->Delete($ID);
+        if($res->rowCount() > 0){
+            echo json_encode(["status" => "success", "message" => "Feedback deleted successfully"]);
+            exit;
+        }else {
+            echo json_encode(["status" => "error", "message" => "Database error"]);
+            exit;
+        }
+    }
+
+
+
 }else{
     // Always return a response in case nothing was matched
     echo json_encode(["status" => "error", "message" => "Invalid request"]);

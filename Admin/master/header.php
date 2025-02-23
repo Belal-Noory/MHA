@@ -12,8 +12,16 @@ $nav_items = [
     "Users" => ["icon" => "fas fa-fw fa-users", "link" => "users.php"],
     "Contacts" => ["icon" => "fas fa-fw fa-phone", "link" => "contacts.php"],
     "Social Media" => ["icon" => "fas fa-fw fa-inbox", "link" => "social.php"],
-    "Posts" => ["icon" => "fas fa-fw fa-image", "link" => "post.php"]
+    "Posts" => ["icon" => "fas fa-fw fa-image", "link" => "post.php"],
+    "Feedbacks" => ["icon" => "fas fa-fw fa-comments", "link" => "feedbacks.php"],
+    "Emails" => ["icon" => "fas fa-fw fa-envelope", "link" => "emails.php"]
 ];
+
+$feedbackManager = new FeedbackManager();
+$newFeedbaks = $feedbackManager->getNewFeedback();
+
+$contactManager = new Contact();
+$newContacts = $contactManager->getMessageByStatus("New");
 ?>
 
 <!DOCTYPE html>
@@ -89,6 +97,87 @@ $nav_items = [
                     </button>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <!-- Nav Item - Contact US -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter"><?php echo $newContacts->rowCount(); ?>+</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Emails Center (Contact US)
+                                </h6>
+                                <?php 
+                                    if($newContacts->rowCount() > 0){
+                                        $newContactData = $newContacts->fetchAll(PDO::FETCH_OBJ);
+                                        foreach ($newContactData as $CData) {
+                                            // Convert it to a DateTime object
+                                            $date = new DateTime($CData->CreatedAt);
+                                            // Format it in a more official format
+                                            $fDate = $date->format('l, d F Y h:i A');?>
+                                                <a class="dropdown-item d-flex align-items-center" href="emails.php?email=<?php echo $CData->MessageID; ?>">
+                                                    <div class="mr-3">
+                                                        <div class="icon-circle bg-primary">
+                                                            <i class="fas fa-user text-white"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="small text-gray-600"><?php echo $fDate; ?></div>
+                                                        <div class="small text-gray-700"><?php echo $CData->Name.', '.$CData->Email; ?></div>
+                                                        <div class="small text-gray-800"><?php echo $CData->Subject; ?></div>
+                                                        <span class="font-weight-bold"><?php echo substr($CData->Message, 0, 100) . '...'; ?></span>
+                                                    </div>
+                                                </a>
+                                        <?php   }
+                                    }
+                                ?>
+                                <a class="dropdown-item text-center small text-gray-600" href="emails.php">Show All Emails</a>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Feedbacks -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-comments fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter"><?php echo $newFeedbaks->rowCount(); ?>+</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Feedbacks Center
+                                </h6>
+                                <?php
+                                    if($newFeedbaks->rowCount() > 0){
+                                        $newFeedbaksData = $newFeedbaks->fetchAll(PDO::FETCH_OBJ);
+                                        foreach ($newFeedbaksData as $Data) {
+                                            // Convert it to a DateTime object
+                                            $date = new DateTime($Data->CreatedAt);
+                                            // Format it in a more official format
+                                            $formattedDate = $date->format('l, d F Y h:i A');?>
+                                            <a class="dropdown-item d-flex align-items-center" href="feedbacks.php?feedback=<?php echo $Data->FeedbackID; ?>">
+                                                <div class="mr-3">
+                                                    <div class="icon-circle bg-primary">
+                                                        <i class="fas fa-comment text-white"></i>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="small text-gray-600"><?php echo $formattedDate; ?></div>
+                                                    <span class="font-weight-bold"><?php echo substr($Data->Feedback, 0, 100) . '...'; ?></span>
+                                                </div>
+                                            </a>
+                                    <?php }
+                                    }
+                                ?>
+                                <a class="dropdown-item text-center small text-gray-600" href="feedbacks.php">Show All Feedbacks</a>
+                            </div>
+                        </li>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
@@ -112,8 +201,6 @@ $nav_items = [
                                 </a>
                             </div>
                         </li>
-
                     </ul>
-
                 </nav>
                 <!-- End of Topbar -->

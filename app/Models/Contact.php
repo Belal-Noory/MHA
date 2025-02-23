@@ -28,6 +28,13 @@ class Contact {
         return $this->conn->Query($query, [$messageId], false);
     }
 
+    // delete a single message by ID
+    public function Delete($messageId)
+    {
+        $query = "DELETE FROM ContactMessages WHERE MessageID = ?";
+        return $this->conn->Query($query, [$messageId]);
+    }
+
     // Get messages by Status
     // Status('New', 'Read', 'Replied')
     public function getMessageByStatus($status)

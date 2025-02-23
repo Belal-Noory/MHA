@@ -39,7 +39,7 @@
 
     <script>
         $(document).ready(function(){
-
+            // logout
             $("#btnlogout").on("click",function(e){
                 e.preventDefault();
                 Swal.fire({
@@ -73,6 +73,25 @@
                     }
                 });
             });
+
+
+            // alerts
+            $(document).on("click",".dropdown-item",function(e){
+                e.preventDefault();
+                ths = $(this);
+                const action = $(this).attr("href");
+
+                var count =  parseInt($(this).parent().parent().children(".nav-link").children(".badge").html());
+                count--;
+                if(count > 0){
+                    $(this).parent().parent().children(".nav-link").children(".badge").html(count);
+                }else{
+                    $(this).parent().parent().children(".nav-link").children(".badge").html("0");
+                }
+                window.location = action;
+            })
+
+
         });
     </script>
 </body>

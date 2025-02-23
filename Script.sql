@@ -103,6 +103,7 @@ CREATE TABLE CustomerFeedback (
     Email VARCHAR(255) NOT NULL,
     Rating INT CHECK (Rating BETWEEN 1 AND 5) NOT NULL,
     Feedback TEXT NOT NULL,
+    Status ENUM('New', 'Read', 'Replied') DEFAULT 'New',
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
