@@ -14,7 +14,8 @@ $nav_items = [
     "Social Media" => ["icon" => "fas fa-fw fa-inbox", "link" => "social.php"],
     "Posts" => ["icon" => "fas fa-fw fa-image", "link" => "post.php"],
     "Feedbacks" => ["icon" => "fas fa-fw fa-comments", "link" => "feedbacks.php"],
-    "Emails" => ["icon" => "fas fa-fw fa-envelope", "link" => "emails.php"]
+    "Emails" => ["icon" => "fas fa-fw fa-envelope", "link" => "emails.php"],
+    "Slidshow" => ["icon" => "fas fa-fw fa-images", "link" => "slidshow.php"]
 ];
 
 $feedbackManager = new FeedbackManager();

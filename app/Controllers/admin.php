@@ -7,6 +7,38 @@ $postManager = new PostManager();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    
+    // Add Slidshow images
+    if (isset($_POST["addimages"])) {
+        $targetDir = "../../assets/img/slidshow/"; // Folder where images will be stored
+        $allowedTypes = array("jpg", "jpeg", "png", "gif");
+        $messages = [];
+
+        foreach ($_FILES["images"]["name"] as $key => $fileName) {
+            $targetFilePath = $targetDir . basename($fileName);
+            $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
+
+            if (in_array($fileType, $allowedTypes)) {
+                move_uploaded_file($_FILES["images"]["tmp_name"][$key], $targetFilePath);
+            }
+        }
+
+        header("Location: ../../Admin/slidshow.php");
+    }
+
+    // Delete Image
+    if (isset($_POST["deleteImage"])) {
+        $fileName = helper::test_input($_POST["Name"]);
+        $filePath = "../" . $fileName;
+
+        if (file_exists($filePath)) {
+            unlink($filePath); // Delete the file
+            echo 1;
+        } else {
+            echo 0;
+        }
+    }
+    
     // Add company details
     if (isset($_POST["updateBackground"])) {
         $Id = helper::test_input($_POST["Id"]);

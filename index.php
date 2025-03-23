@@ -53,7 +53,7 @@
 
 <body class="index-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
+  <header id="header" class="scrolled header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
       <a href="index.php" class="logo d-flex align-items-center me-auto">
@@ -77,19 +77,34 @@
 
   <main class="main">
     <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
+     <div class="hero">
+      <div id="carouselExample" class="carousel slide">
+          <div class="carousel-inner">
+          <?php
+            $imageFolder = "assets/img/slidshow/"; // Ensure the trailing slash
+            $images = glob($imageFolder . "*.{jpg,png,jpeg,gif}", GLOB_BRACE);
+            $active = "active";
 
-      <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+            foreach ($images as $image) {
+                echo '<div class="carousel-item ' . $active . '">
+                        <img src="' . $image . '" class="d-block w-100" alt="Slideshow Image">
+                      </div>';
+                $active = ""; // Only the first image should have the 'active' class
+            }
+            ?>
 
-      <div class="container d-flex flex-column align-items-center">
-        <h2 data-aos="fade-up" data-aos-delay="100" style="font-variant: small-caps; letter-spacing: 8px;">METAL HUB AUSTRALIA</h2>
-        <p data-aos="fade-up" data-aos-delay="200" style="font-variant: small-caps; letter-spacing: 10px;">Turning old into gold</p>
-        <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
-          <a href="#about" class="btn-get-started">Get Started</a>
+            
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
       </div>
-
-    </section><!-- /Hero Section -->
 
     <!-- About Section -->
     <section id="about" class="about section">
