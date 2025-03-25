@@ -86,7 +86,7 @@
             $active = "active";
 
             foreach ($images as $image) {
-                echo '<div class="carousel-item ' . $active . '">
+                echo '<div class="carousel-item ' . $active . '" data-bs-interval="5000">
                         <img src="' . $image . '" class="d-block w-100" alt="Slideshow Image">
                         <div class="carousel-caption d-none d-md-block">
                           <h5>META HUB AUSTRALIA</h5>
