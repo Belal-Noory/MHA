@@ -78,7 +78,7 @@
   <main class="main">
     <!-- Hero Section -->
      <div class="hero">
-      <div id="carouselExample" class="carousel slide">
+      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
           <?php
             $imageFolder = "assets/img/slidshow/"; // Ensure the trailing slash
