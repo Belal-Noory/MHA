@@ -78,7 +78,7 @@
   <main class="main">
     <!-- Hero Section -->
      <div class="hero">
-      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-interval="3000" data-pause="false">
           <div class="carousel-inner">
           <?php
             $imageFolder = "assets/img/slidshow/"; // Ensure the trailing slash
@@ -86,7 +86,7 @@
             $active = "active";
 
             foreach ($images as $image) {
-                echo '<div class="carousel-item ' . $active . '" data-bs-interval="5000">
+                echo '<div class="carousel-item ' . $active . '">
                         <img src="' . $image . '" class="d-block w-100" alt="Slideshow Image">
                         <div class="carousel-caption d-none d-md-block">
                           <h5>META HUB AUSTRALIA</h5>
