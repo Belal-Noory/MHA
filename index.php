@@ -88,6 +88,10 @@
             foreach ($images as $image) {
                 echo '<div class="carousel-item ' . $active . '">
                         <img src="' . $image . '" class="d-block w-100" alt="Slideshow Image">
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>META HUB AUSTRALIA</h5>
+                          <p>Turn old into gold.</p>
+                        </div>
                       </div>';
                 $active = ""; // Only the first image should have the 'active' class
             }
