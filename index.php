@@ -50,11 +50,14 @@
   <link href="assets/css/main.css" rel="stylesheet">
 
   <style>
+    *{
+      text-decoration: none;
+    }
+
     .carousel-caption {
         background: rgba(0, 0, 0, 0.35);
         color: white;
         font-variant: small-caps;
-        
     }
 
     .carousel-caption h5{
