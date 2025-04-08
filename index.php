@@ -23,7 +23,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<s>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>META HUB AUSTRALIA</title>
@@ -49,10 +49,27 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
+  <style>
+    .carousel-caption {
+        background: rgba(0, 0, 0, 0.35);
+        color: white;
+        font-variant: small-caps;
+        
+    }
+
+    .carousel-caption h5{
+      font-size: 2.5rem;
+      width: 100%;
+      color: white;
+    }
+
+    .carousel-caption p{
+      font-size: 1.5rem;
+    }
+  </style>
 </head>
 
 <body class="index-page">
-
   <header id="header" class="scrolled header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
@@ -90,10 +107,10 @@
                         <img src="' . $image . '" class="d-block w-100" alt="Slideshow Image">
                         <div class="carousel-caption d-none d-md-block">
                           <h5>META HUB AUSTRALIA</h5>
-                          <p>Turn old into gold.</p>
+                          <p>Turn old into gold</p>
                         </div>
                       </div>';
-                $active = ""; // Only the first image should have the 'active' class
+                $active = ""; 
             }
             ?>
 
